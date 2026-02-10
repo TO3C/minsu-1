@@ -3,62 +3,1121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE MOMENT SANYA</title>
+    <title>云隐三亚 | THE MOMENT SANYA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0a0a0a;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Times New Roman', serif;
+        :root {
+            --sanya-sand: #F5E6D3;
+            --sanya-gold: #C9A962;
+            --sanya-deep: #1A3A52;
+            --sanya-teal: #2D6B7A;
+            --sanya-coral: #E8916E;
+            --sanya-dark: #0D1B2A;
         }
-        .container {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--sanya-sand);
+            color: var(--sanya-dark);
+            overflow-x: hidden;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 200;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--sanya-gold);
+            border-color: var(--sanya-gold);
+            color: var(--sanya-deep);
+        }
+
+        .nav.scrolled ~ .lang-switcher .lang-btn {
+            background: rgba(26, 58, 82, 0.1);
+            border-color: rgba(26, 58, 82, 0.3);
+            color: var(--sanya-deep);
+        }
+
+        .nav.scrolled ~ .lang-switcher .lang-btn:hover,
+        .nav.scrolled ~ .lang-switcher .lang-btn.active {
+            background: var(--sanya-gold);
+            border-color: var(--sanya-gold);
+            color: var(--sanya-deep);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                var(--sanya-deep) 0%, 
+                var(--sanya-teal) 50%, 
+                var(--sanya-coral) 100%);
+            opacity: 0.9;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            max-width: 90%;
+        }
+
+        .hero-tag {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--sanya-gold);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.3s;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 10vw, 8rem);
+            font-weight: 300;
+            color: white;
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+
+        .hero-title span {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 300;
+            font-size: 0.6em;
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--sanya-sand);
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.7s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: transparent;
+            border: 1px solid var(--sanya-gold);
+            color: var(--sanya-gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.9s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--sanya-gold);
+            transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .cta-btn:hover {
+            color: var(--sanya-deep);
+        }
+
+        .cta-btn:hover::before {
+            left: 0;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: all 0.4s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(245, 230, 211, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 4rem;
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 4px;
+            transition: color 0.3s;
+        }
+
+        .nav.scrolled .nav-logo {
+            color: var(--sanya-deep);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav.scrolled .nav-links a {
+            color: var(--sanya-deep);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--sanya-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled .mobile-menu-btn span {
+            background: var(--sanya-deep);
+        }
+
+        /* About Section */
+        .about {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: filter 0.5s ease;
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -30px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--sanya-gold);
+            z-index: -1;
+        }
+
+        .about-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--sanya-deep);
+            margin-bottom: 1rem;
+        }
+
+        .about-content h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--sanya-teal);
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+        }
+
+        .about-content p {
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--sanya-dark);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 4rem;
+            background: var(--sanya-deep);
+            position: relative;
+        }
+
+        .features-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .features-title h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+        }
+
+        .features-title span {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            color: var(--sanya-gold);
+            letter-spacing: 4px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 3rem 2rem;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            border-color: var(--sanya-gold);
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--sanya-gold);
+        }
+
+        .feature-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .gallery-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--sanya-deep);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(1) { grid-column: span 8; grid-row: span 2; }
+        .gallery-item:nth-child(2) { grid-column: span 4; }
+        .gallery-item:nth-child(3) { grid-column: span 4; }
+        .gallery-item:nth-child(4) { grid-column: span 6; }
+        .gallery-item:nth-child(5) { grid-column: span 6; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(13, 27, 42, 0.9) 0%, transparent 100%);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h4 {
+            font-family: 'Noto Serif SC', serif;
+            color: white;
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 4rem;
+            background: linear-gradient(135deg, var(--sanya-sand) 0%, #E8DCC8 100%);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+        }
+
+        .contact-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--sanya-deep);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info > p {
+            color: var(--sanya-teal);
+            font-size: 1rem;
+            letter-spacing: 4px;
+            margin-bottom: 3rem;
+        }
+
+        .contact-detail {
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.9rem;
+            color: var(--sanya-deep);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .contact-detail p {
+            color: var(--sanya-dark);
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(26, 58, 82, 0.2);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--sanya-deep);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--sanya-gold);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            padding: 1rem 3rem;
+            background: var(--sanya-deep);
+            color: white;
+            border: none;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background: var(--sanya-gold);
+            color: var(--sanya-deep);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem;
+            background: var(--sanya-dark);
             text-align: center;
         }
-        h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
-            color: #c9a86c;
-            margin-bottom: 10px;
-            letter-spacing: 8px;
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--sanya-gold);
+            margin-bottom: 1rem;
         }
-        .subtitle {
-            color: #888;
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 60px;
+
+        .footer p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
         }
-        .links {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            flex-wrap: wrap;
+
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            .lang-switcher {
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .about-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item:nth-child(n) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
         }
-        .link {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            padding: 20px 40px;
-            border: 1px solid #333;
-            transition: 0.3s;
+
+        /* Responsive - Mobile */
+        @media (max-width: 768px) {
+            .lang-switcher {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .lang-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(13, 27, 42, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                z-index: 140;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                color: white;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .about,
+            .features,
+            .gallery,
+            .contact {
+                padding: 4rem 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .about-image img {
+                height: 400px;
+            }
+
+            .about-image::before {
+                top: 15px;
+                left: -15px;
+            }
+
+            .contact-container {
+                gap: 3rem;
+            }
+
+            .cta-btn {
+                padding: 1rem 2rem;
+                font-size: 0.75rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
         }
-        .link:hover {
-            background: #c9a86c;
-            color: #000;
-            border-color: #c9a86c;
+
+        /* Responsive - Small Mobile */
+        @media (max-width: 480px) {
+            .nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-logo {
+                font-size: 1.2rem;
+            }
+
+            .about-content h2,
+            .features-title h2,
+            .gallery-header h2,
+            .contact-info h2 {
+                font-size: 2rem;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer {
+                padding: 3rem 1.5rem;
+            }
+
+            .footer-logo {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>THE MOMENT</h1>
-        <p class="subtitle">Sanya / 三亚</p>
-        <div class="links">
-            <a href="the-moment-sanya.html" class="link">HOME / 首页</a>
-            <a href="booking-moment.html" class="link">BOOK / 预订</a>
-        </div>
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('zh')" data-lang="zh">中文</button>
+        <button class="lang-btn" onclick="switchLang('ru')" data-lang="ru">RU</button>
     </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="#" class="nav-logo">云隐三亚</a>
+        <div class="mobile-menu-btn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about" data-i18n="nav.about">关于</a></li>
+            <li><a href="#features" data-i18n="nav.features">特色</a></li>
+            <li><a href="#gallery" data-i18n="nav.gallery">图集</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">预订</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-tag" data-i18n="hero.tag">Boutique Homestay</p>
+            <h1 class="hero-title">
+                THE MOMENT
+                <span>云隐三亚</span>
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Where Time Slows Down by the Sea</p>
+            <a href="#contact" class="cta-btn" data-i18n="hero.cta">立即预订</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-grid">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80" alt="三亚民宿">
+            </div>
+            <div class="about-content">
+                <h2>The Moment</h2>
+                <h3 data-i18n="about.subtitle">隐于云端的静谧时光</h3>
+                <p data-i18n="about.p1">云隐三亚坐落于三亚湾最宁静的海岸线，背靠葱郁的山峦，面朝碧蓝的南海。这里没有城市的喧嚣，只有海风轻拂、椰林摇曳的自然交响。</p>
+                <p data-i18n="about.p2">我们精心打造每一处空间，融合海南本土文化与现代设计美学。从日出到日落，从星空到晨曦，云隐三亚为您呈现最纯粹的海岛生活体验。</p>
+                <p data-i18n="about.p3">在这里，时间仿佛放慢了脚步。您可以在私人泳池边品味一杯手冲咖啡，或在露台上静观云卷云舒。这就是属于您的 THE MOMENT。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-title">
+            <span data-i18n="features.subtitle">特色体验</span>
+            <h2>Unforgettable Experiences</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">∞</div>
+                <h3 data-i18n="features.pool.title">无边泳池</h3>
+                <p data-i18n="features.pool.desc">私人无边际泳池与海天一色，在波光粼粼中畅游，尽享私密与辽阔</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">☀</div>
+                <h3 data-i18n="features.terrace.title">日出露台</h3>
+                <p data-i18n="features.terrace.desc">270度海景露台，每日清晨在第一缕阳光中醒来，开启美好一天</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3 data-i18n="features.butler.title">私人管家</h3>
+                <p data-i18n="features.butler.desc">24小时专属管家服务，从接机到离店，全程贴心照料您的每一个需求</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">◈</div>
+                <h3 data-i18n="features.chef.title">海南私厨</h3>
+                <p data-i18n="features.chef.desc">本地私厨为您烹饪最新鲜的海鲜与海南特色料理，舌尖上的热带风情</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✧</div>
+                <h3 data-i18n="features.spa.title">SPA水疗</h3>
+                <p data-i18n="features.spa.desc">融合海南草药与传统技艺的SPA体验，在海浪声中彻底放松身心</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✈</div>
+                <h3 data-i18n="features.vip.title">专属礼遇</h3>
+                <p data-i18n="features.vip.desc">机场贵宾接送、欢迎香槟、定制行程规划，尊贵体验从这里开始</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-header">
+            <h2>Gallery</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=80" alt="海景套房">
+                <div class="gallery-overlay">
+                    <h4 data-i18n="gallery.suite">海景总统套房</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="无边泳池">
+                <div class="gallery-overlay">
+                    <h4 data-i18n="gallery.pool">无边际泳池</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80" alt="露台">
+                <div class="gallery-overlay">
+                    <h4 data-i18n="gallery.terrace">海景露台</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80" alt="餐厅">
+                <div class="gallery-overlay">
+                    <h4 data-i18n="gallery.restaurant">私厨餐厅</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80" alt="SPA">
+                <div class="gallery-overlay">
+                    <h4 data-i18n="gallery.spa">水疗中心</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2 data-i18n="contact.title">预订您的旅程</h2>
+                <p>RESERVATION</p>
+                
+                <div class="contact-detail">
+                    <h4 data-i18n="contact.address.label">地址</h4>
+                    <p data-i18n="contact.address.value">海南省三亚市三亚湾路188号<br>云隐三亚精品民宿</p>
+                </div>
+                
+                <div class="contact-detail">
+                    <h4 data-i18n="contact.phone.label">电话</h4>
+                    <p>+86 898 8888 8888</p>
+                </div>
+                
+                <div class="contact-detail">
+                    <h4 data-i18n="contact.email.label">邮箱</h4>
+                    <p>reserve@themomentsanya.com</p>
+                </div>
+            </div>
+            
+            <form class="contact-form">
+                <input type="text" data-i18n-placeholder="contact.form.name" placeholder="您的姓名" required>
+                <input type="email" data-i18n-placeholder="contact.form.email" placeholder="电子邮箱" required>
+                <input type="tel" data-i18n-placeholder="contact.form.phone" placeholder="联系电话">
+                <input type="text" data-i18n-placeholder="contact.form.date" placeholder="入住日期 - 离店日期" onfocus="(this.type='date')">
+                <textarea data-i18n-placeholder="contact.form.message" placeholder="特殊需求或留言"></textarea>
+                <button type="submit" data-i18n="contact.form.submit">提交预订</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">THE MOMENT</div>
+        <p data-i18n="footer.tagline">云隐三亚 · 让时光慢下来</p>
+        <p style="margin-top: 1rem; opacity: 0.5;">© 2026 THE MOMENT SANYA. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 多语言数据
+        const i18n = {
+            zh: {
+                'nav.about': '关于',
+                'nav.features': '特色',
+                'nav.gallery': '图集',
+                'nav.contact': '预订',
+                'hero.tag': 'Boutique Homestay',
+                'hero.subtitle': 'Where Time Slows Down by the Sea',
+                'hero.cta': '立即预订',
+                'about.subtitle': '隐于云端的静谧时光',
+                'about.p1': '云隐三亚坐落于三亚湾最宁静的海岸线，背靠葱郁的山峦，面朝碧蓝的南海。这里没有城市的喧嚣，只有海风轻拂、椰林摇曳的自然交响。',
+                'about.p2': '我们精心打造每一处空间，融合海南本土文化与现代设计美学。从日出到日落，从星空到晨曦，云隐三亚为您呈现最纯粹的海岛生活体验。',
+                'about.p3': '在这里，时间仿佛放慢了脚步。您可以在私人泳池边品味一杯手冲咖啡，或在露台上静观云卷云舒。这就是属于您的 THE MOMENT。',
+                'features.subtitle': '特色体验',
+                'features.pool.title': '无边泳池',
+                'features.pool.desc': '私人无边际泳池与海天一色，在波光粼粼中畅游，尽享私密与辽阔',
+                'features.terrace.title': '日出露台',
+                'features.terrace.desc': '270度海景露台，每日清晨在第一缕阳光中醒来，开启美好一天',
+                'features.butler.title': '私人管家',
+                'features.butler.desc': '24小时专属管家服务，从接机到离店，全程贴心照料您的每一个需求',
+                'features.chef.title': '海南私厨',
+                'features.chef.desc': '本地私厨为您烹饪最新鲜的海鲜与海南特色料理，舌尖上的热带风情',
+                'features.spa.title': 'SPA水疗',
+                'features.spa.desc': '融合海南草药与传统技艺的SPA体验，在海浪声中彻底放松身心',
+                'features.vip.title': '专属礼遇',
+                'features.vip.desc': '机场贵宾接送、欢迎香槟、定制行程规划，尊贵体验从这里开始',
+                'gallery.suite': '海景总统套房',
+                'gallery.pool': '无边际泳池',
+                'gallery.terrace': '海景露台',
+                'gallery.restaurant': '私厨餐厅',
+                'gallery.spa': '水疗中心',
+                'contact.title': '预订您的旅程',
+                'contact.address.label': '地址',
+                'contact.address.value': '海南省三亚市三亚湾路188号<br>云隐三亚精品民宿',
+                'contact.phone.label': '电话',
+                'contact.email.label': '邮箱',
+                'contact.form.name': '您的姓名',
+                'contact.form.email': '电子邮箱',
+                'contact.form.phone': '联系电话',
+                'contact.form.date': '入住日期 - 离店日期',
+                'contact.form.message': '特殊需求或留言',
+                'contact.form.submit': '提交预订',
+                'footer.tagline': '云隐三亚 · 让时光慢下来'
+            },
+            ru: {
+                'nav.about': 'О нас',
+                'nav.features': 'Услуги',
+                'nav.gallery': 'Галерея',
+                'nav.contact': 'Бронь',
+                'hero.tag': 'Бутик-отель',
+                'hero.subtitle': 'Где время замедляется у моря',
+                'hero.cta': 'Забронировать',
+                'about.subtitle': 'Тихое время среди облаков',
+                'about.p1': 'The Moment Sanya расположен на самом тихом побережье залива Санья, у подножия зелёных гор и лицом к бирюзовому Южно-Китайскому морю. Здесь нет городской суеты — только морской бриз и шепот кокосовых пальм.',
+                'about.p2': 'Мы тщательно продумали каждое пространство, сочетая местную культуру Хайнани с современным дизайном. От восхода до заката, от звёзд до рассвета — The Moment Sanya дарит вам подлинный опыт островной жизни.',
+                'about.p3': 'Здесь время словно замедляется. Вы можете насладиться чашкой кофе у частного бассейна или наблюдать за облаками с террасы. Это ваш момент — THE MOMENT.',
+                'features.subtitle': 'Особенности',
+                'features.pool.title': 'Бескрайний бассейн',
+                'features.pool.desc': 'Частный бесконечный бассейн сливается с горизонтом — плавайте в спокойных водах, наслаждаясь уединением и простором',
+                'features.terrace.title': 'Терраса рассвета',
+                'features.terrace.desc': 'Терраса с панорамным видом на море 270° — встречайте первые лучи солнца каждое утро',
+                'features.butler.title': 'Личный дворецкий',
+                'features.butler.desc': 'Круглосуточное обслуживание личным дворецким — от встречи в аэропорту до отъезда',
+                'features.chef.title': 'Шеф-повар Хайнани',
+                'features.chef.desc': 'Местный шеф-повар приготовит для вас свежайшие морепродукты и блюда Хайнани — вкус тропиков',
+                'features.spa.title': 'SPA и велнес',
+                'features.spa.desc': 'SPA-процедуры с использованием местных трав Хайнани — полное расслабление под шум волн',
+                'features.vip.title': 'VIP сервис',
+                'features.vip.desc': 'Трансфер из аэропорта, приветственное шампанское, индивидуальное планирование — роскошь начинается здесь',
+                'gallery.suite': 'Президентский люкс с видом на море',
+                'gallery.pool': 'Бесконечный бассейн',
+                'gallery.terrace': 'Терраса с видом на море',
+                'gallery.restaurant': 'Ресторан',
+                'gallery.spa': 'SPA-центр',
+                'contact.title': 'Забронировать поездку',
+                'contact.address.label': 'Адрес',
+                'contact.address.value': '188 Sanya Bay Road,<br>Sanya, Hainan, China',
+                'contact.phone.label': 'Телефон',
+                'contact.email.label': 'Email',
+                'contact.form.name': 'Ваше имя',
+                'contact.form.email': 'Email',
+                'contact.form.phone': 'Телефон',
+                'contact.form.date': 'Дата заезда - выезда',
+                'contact.form.message': 'Особые пожелания',
+                'contact.form.submit': 'Отправить заявку',
+                'footer.tagline': 'The Moment Sanya · Пусть время замедлится'
+            }
+        };
+
+        // 当前语言
+        let currentLang = 'zh';
+
+        // 切换语言
+        function switchLang(lang) {
+            currentLang = lang;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 更新所有文本
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (i18n[lang][key]) {
+                    el.textContent = i18n[lang][key];
+                }
+            });
+            
+            // 更新 placeholder
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (i18n[lang][key]) {
+                    el.placeholder = i18n[lang][key];
+                }
+            });
+            
+            // 保存语言偏好
+            localStorage.setItem('preferred-lang', lang);
+        }
+
+        // 切换移动端菜单
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // 页面加载时检查语言偏好
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-lang');
+            if (savedLang && savedLang !== 'zh') {
+                switchLang(savedLang);
+            }
+        });
+
+        // 导航滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // 关闭移动端菜单
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
+
+        // 表单提交
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = currentLang === 'zh' 
+                ? '感谢您的预订！我们会尽快与您联系。' 
+                : 'Спасибо за бронирование! Мы свяжемся с вами в ближайшее время.';
+            alert(message);
+        });
+    </script>
 </body>
 </html>
